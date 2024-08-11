@@ -44,6 +44,7 @@ const createTables = async () => {
             strand VARCHAR(255) NOT NULL,
             description VARCHAR(255) NOT NULL,
             pdf_name VARCHAR(255) NOT NULL,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
             created_at TIMESTAMP NOT NULL DEFAULT NOW(),
             updated_at TIMESTAMP NOT NULL DEFAULT NOW()
           )`;
