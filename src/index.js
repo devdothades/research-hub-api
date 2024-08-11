@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import errorhandler from "./utils/errorhandler";
+import errorhandler from "./utils/errorhandler.js";
 
 dotenv.configDotenv();
 
@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // ROUTES
+import userRoute from "./user/index.js";
+app.use("/app/v1/users", userRoute);
 
 app.use("*", (req, res, next) => {
     next(new Error("Route not found"));
