@@ -12,14 +12,14 @@ import {
 } from "./controller.js";
 const router = Router();
 
-router.use(userValidation);
-router.use(validator);
+// router.use(userValidation);
+// router.use(validator);
 
-router.post("/", signup);
-router.post("/", login);
-router.get("/", getUser);
 router.get("/:id", getUserById);
-router.put("/:id", updateUser);
+router.put("/:id", userValidation, validator, updateUser);
 router.delete("/:id", deleteUser);
+router.post("/", userValidation, validator, signup);
+router.post("/", userValidation, validator, login);
+router.get("/", getUser);
 
 export default router;
