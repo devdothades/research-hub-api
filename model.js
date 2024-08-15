@@ -2,6 +2,7 @@ import pg from "pg";
 import dotenv from "dotenv";
 dotenv.configDotenv();
 
+// connect to the database with your database account
 const pool = new pg.Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -10,6 +11,7 @@ const pool = new pg.Pool({
     database: process.env.DB_NAME,
 });
 
+// create tables
 const createTables = async () => {
     const client = await pool.connect();
 
@@ -83,6 +85,6 @@ const createTables = async () => {
 };
 
 createTables().catch((err) => {
-    console.error("Error in createTables: ", err);
+    console.error("Error in createTables: ", err); // log the error
 });
 export default pool;

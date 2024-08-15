@@ -12,9 +12,7 @@ import {
 } from "./controller.js";
 const router = Router();
 
-// router.use(userValidation);
-// router.use(validator);
-
+// routes and middlewares
 router.get("/:id", getUserById);
 router.put("/:id", userValidation, validator, updateUser);
 router.delete("/:id", deleteUser);

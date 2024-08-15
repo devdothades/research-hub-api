@@ -1,3 +1,4 @@
+// modules
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -15,6 +16,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// logging middleware for development
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
@@ -23,10 +25,12 @@ if (process.env.NODE_ENV === "development") {
 import userRoute from "./user/index.js";
 app.use("/app/v1/users", userRoute);
 
+// returns an error if the route is not found
 app.use("*", (req, res, next) => {
     next(new Error("Route not found"));
 });
 
+// error handler middleware
 app.use(errorhandler);
 
 export default app;

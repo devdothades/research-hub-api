@@ -1,10 +1,12 @@
 import AppError from "./AppError.js";
 
+// database error
 const handleCastErrorDB = (err) => {
     const message = `Invalid ${err.path}: ${err.value}`;
     return new AppError(message, 400);
 };
 
+// duplicate values in database
 const handleDuplicateFieldsDB = (err) => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
     console.log(value);
