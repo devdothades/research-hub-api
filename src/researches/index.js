@@ -5,17 +5,20 @@ import {
     createResearch,
     updateResearch,
     deleteResearch,
-} from "./research.controller";
+} from "./controller.js";
 import validator from "../utils/validator.js";
-import userAuth from "./middleware.js";
+import validation from "./middleware.js";
+import userAuthentication from "../auth/TokenMiddleware.js";
 
 const router = Router();
 
-// routes and middlewares
+// middlewares
 
 router.use(validator);
-router.use(userAuth);
+router.use(validation);
+router.use(userAuthentication);
 
+// routes
 router.get("/", getResearches);
 router.get("/:id", getResearch);
 router.post("/", createResearch);
