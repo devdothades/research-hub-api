@@ -29,6 +29,7 @@ app.use("/app/v1/researches", researchRoute);
 
 // returns an error if the route is not found
 app.use("*", (req, res, next) => {
+    console.log("route not found");
     next(new Error("Route not found"));
 });
 
