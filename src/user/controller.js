@@ -2,11 +2,12 @@ import pool from "../../model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.configDotenv();
 
 // LOGIN function
 const login = async (req, res) => {
     const { username, password } = req.body; // get username and password from request body
-
     try {
         // check if username exists
         const rows = await pool.query(
@@ -34,7 +35,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign(
             { userId: rows.rows[0].id },
-            process.env.JWT_SECRET,
+            process.env.SECRET_KEY,
             {
                 expiresIn: "1h",
             }
@@ -130,6 +131,8 @@ const updateUser = async (req, res) => {
         res.status(500).json({ message: error.message }); // if there is an error, return the error
     }
 };
+
+// TODO: still outputs successfully deleted even tho there is not data to delete must fix ASAP
 
 // DELETE USER function
 const deleteUser = async (req, res) => {
