@@ -8,15 +8,9 @@ const validation = [
         .withMessage("Uploader is required")
         .isString()
         .withMessage("Uploader must be a string"),
-    body("title")
-        .trim()
-        .blacklist(" ")
-        .notEmpty()
-        .withMessage("Title is required")
-        .isString(),
+    body("title").trim().notEmpty().withMessage("Title is required").isString(),
     body("authors")
         .trim()
-        .blacklist(" ")
         .notEmpty()
         .withMessage("Author is required")
         .isString()
@@ -37,7 +31,6 @@ const validation = [
         .withMessage("Strand must be a string"),
     body("description")
         .trim()
-        .blacklist(" ")
         .notEmpty()
         .withMessage("Description is required")
         .isString(),
