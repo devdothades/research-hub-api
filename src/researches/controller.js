@@ -16,7 +16,7 @@ const getResearches = asyncHandler(async (req, res) => {
     }
 });
 const getResearch = asyncHandler(async (req, res) => {
-    const { strand, category } = req.params;
+    const { strand, category } = req.query;
     const { userInput } = req.body;
 
     try {
@@ -24,6 +24,28 @@ const getResearch = asyncHandler(async (req, res) => {
             const query = await pool.query(
                 "SELECT * FROM researches WHERE title = $1 OR authors = $1;",
                 [userInput]
+            );
+
+            query
+                ? res.status(200).json(query.rows)
+                : res.status(401).json({ msg: "no data found" });
+        }
+
+        if (strand || category) {
+            console.log(strand);
+            const query = await pool.query(
+                "SELECT * FROM researches WHERE strand = $1 OR category = $2",
+                [strand, category]
+            );
+
+            query
+                ? res.status(200).json(query.rows)
+                : res.status(401).json({ msg: "no data found" });
+        } else if (category && category) {
+            console.log(category);
+            const query = await pool.query(
+                "SELECT * FROM researches WHERE strand = $1 AND category = $2",
+                [strand, category]
             );
 
             query
