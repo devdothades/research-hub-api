@@ -92,8 +92,46 @@ const createResearch = asyncHandler(async (req, res) => {
         res.status(401).json({ msg: error });
     }
 });
-const updateResearch = asyncHandler(async (req, res) => {});
-const deleteResearch = asyncHandler(async (req, res) => {});
+
+// TODO: for testing tomorrow
+const updateResearch = asyncHandler(async (req, res) => {
+    const reqId = req.userId;
+    const { id } = req.params;
+    const { title, authors, category, strand, description, pdf_name } =
+        req.body;
+
+    try {
+        const query = await pool.query(
+            "UPDATE researches SET title = $1, authors = $2, category = $3, strand = $4, description = $5, pdf_name = $6 WHERE id = $7 AND user_id = $8",
+            [title, authors, category, strand, description, pdf_name, id, reqId]
+        );
+
+        query
+            ? res.status(200).json({ msg: "successfully updated" })
+            : res.status(401).json({ msg: "failed to update" });
+    } catch (error) {
+        res.status(401).json({ msg: error });
+    }
+});
+
+// TODO: for testing tomorrow
+const deleteResearch = asyncHandler(async (req, res) => {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    try {
+        const query = await pool.query(
+            "DELETE FROM researches WHERE id = $1 AND user_id = $2",
+            [id, userId]
+        );
+
+        query
+            ? res.status(200).json({ msg: "successfully deleted" })
+            : res.status(401).json({ msg: "failed to delete" });
+    } catch (error) {
+        res.status(401).json({ msg: error });
+    }
+});
 
 // for development
 // SEEDER
