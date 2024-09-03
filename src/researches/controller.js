@@ -57,6 +57,25 @@ const getResearch = asyncHandler(async (req, res) => {
     }
 });
 
+// done
+const getUserResearch = asyncHandler(async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+
+    try {
+        const query = await pool.query(
+            "SELECT * FROM researches WHERE user_id = $1",
+            [userId]
+        );
+        query
+            ? res.status(200).json(query.rows) // if successful, return success message
+            : res.status(401).json({ msg: "no data found" }); //
+    } catch (error) {
+        console.log(error);
+        res.status(401).json({ msg: error });
+    }
+});
+
 const createResearch = asyncHandler(async (req, res) => {
     const userId = req.userId;
 
@@ -150,6 +169,7 @@ const deleteAll = asyncHandler(async (req, res) => {
 export {
     getResearches,
     getResearch,
+    getUserResearch,
     createResearch,
     updateResearch,
     deleteResearch,
