@@ -1,13 +1,6 @@
 import { body } from "express-validator";
 
 const validation = [
-    body("uploader")
-        .trim()
-        .blacklist(" ")
-        .notEmpty()
-        .withMessage("Uploader is required")
-        .isString()
-        .withMessage("Uploader must be a string"),
     body("title").trim().notEmpty().withMessage("Title is required").isString(),
     body("authors")
         .trim()
